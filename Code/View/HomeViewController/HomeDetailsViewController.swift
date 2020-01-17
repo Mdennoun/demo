@@ -33,6 +33,7 @@ class HomeDetailsViewController: UIViewController {
     fileprivate let rainValueLabel: UILabel = UILabel()
     fileprivate let windStackView: UIStackView = UIStackView()
     fileprivate let windLabel: UILabel = UILabel()
+    fileprivate let windUnitLabel: UILabel = UILabel()
     fileprivate let windValueLabel: UILabel = UILabel()
     
     //MARK: Life Cycle
@@ -57,10 +58,10 @@ class HomeDetailsViewController: UIViewController {
         } else {
             self.temperatureLabel.text = "0°C"
         }
-        self.humidityValueLabel.text = "\(weather.humidity ?? 0)"
-        self.pressureValueLabel.text = "\(weather.pressure ?? 0)"
-        self.rainValueLabel.text = "\(weather.rain ?? 0)"
-        self.windValueLabel.text = "\(weather.wind ?? 0)"
+        self.humidityValueLabel.text = "\(weather.humidity ?? 0)    g/m3"
+        self.pressureValueLabel.text = "\(weather.pressure ?? 0)   p"
+        self.rainValueLabel.text = "\(weather.rain ?? 0)   mm"
+        self.windValueLabel.text = "\(weather.wind ?? 0)   km"
     }
     
     //MARK: Setup Views and Constraints
@@ -126,7 +127,7 @@ class HomeDetailsViewController: UIViewController {
     }
     
     private func setupHumidityLabel() {
-        self.humidity.text = "Humidité"
+        self.humidity.text = "Humidité :"
         self.humidity.textColor = UIColor.white
         self.humidity.textAlignment = .left
         self.humidity.font = UIFont.systemFont(ofSize: 30)
@@ -148,7 +149,7 @@ class HomeDetailsViewController: UIViewController {
     }
     
     private func setupPressureLabel() {
-        self.pressureLabel.text = "Pression"
+        self.pressureLabel.text = "Pression :"
         self.pressureLabel.textColor = UIColor.white
         self.pressureLabel.textAlignment = .left
         self.pressureLabel.font = UIFont.systemFont(ofSize: 30)
@@ -170,7 +171,7 @@ class HomeDetailsViewController: UIViewController {
     }
     
     private func setupRainLabel() {
-        self.rainLabel.text = "Pluie"
+        self.rainLabel.text = "Pluie :"
         self.rainLabel.textColor = UIColor.white
         self.rainLabel.textAlignment = .left
         self.rainLabel.font = UIFont.systemFont(ofSize: 30)
@@ -192,7 +193,7 @@ class HomeDetailsViewController: UIViewController {
     }
     
     private func setupWindLabel() {
-        self.windLabel.text = "Vent"
+        self.windLabel.text = "Vent :"
         self.windLabel.textColor = UIColor.white
         self.windLabel.textAlignment = .left
         self.windLabel.font = UIFont.systemFont(ofSize: 30)
@@ -205,7 +206,6 @@ class HomeDetailsViewController: UIViewController {
         self.windValueLabel.font = UIFont.systemFont(ofSize: 30)
         self.windStackView.addArrangedSubview(self.windValueLabel)
     }
-    
     
     //MARK: Setup Views Constraints
     fileprivate func setupScrollViewConstraints() {

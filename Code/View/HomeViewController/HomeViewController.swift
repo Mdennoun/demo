@@ -71,7 +71,7 @@ class HomeViewController: UIViewController {
     /* Calculate the number of cells to display based on device orientation and return the items width. */
     func calculateWidth() -> CGFloat {
         let cellCount = floor(CGFloat(self.view.frame.size.width) / estimateWidth)
-        let width = (self.view.frame.size.width - (cellCount - 1) - (margin * 2) ) / cellCount
+        let width = ((self.view.frame.size.width ) - (cellCount - 1) - (margin * 2) ) / cellCount
         
         return width
     }

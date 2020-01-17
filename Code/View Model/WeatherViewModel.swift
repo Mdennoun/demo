@@ -17,7 +17,8 @@ class WeatherViewModel{
     typealias ServiceResponse = (Error?) -> Void
     var weathers: [WeatherProtocol] {
         let dbWeathers = (DBWeather.mr_findAll() as? [WeatherProtocol]) ?? []
-        return  dbWeathers.sorted(by: { $0.formattedDate.compare($1.formattedDate) == .orderedAscending })
+                   return  dbWeathers.sorted(by: { $0.formattedDate.compare($1.formattedDate) == .orderedAscending })
+      
     }
 
     /*
@@ -29,7 +30,14 @@ class WeatherViewModel{
      - In case of failure, we will send in the completion a nil array and an error.
      */
     func fetchWeather(currentLocation: CLLocation?, completion: @escaping ServiceResponse) {
-        
+        if ( currentLocation != nil) {
+            print("location \(currentLocation!.coordinate)")
+            
+            var lat = currentLocation!.coordinate.latitude
+            var long = currentLocation!.coordinate.longitude
+        } else {
+            print("nil")
+        }
         let urlString = "https://www.infoclimat.fr/public-api/gfs/json?_ll=\(48.85341),\(2.3488)&_auth=VU8EE1IsBCZUeVFmBHIGLwVtVWAOeAYhAn4HZAtuVShROgBhUjJcOgdpUy5QfwcxBSgPbFxnADBTOFYuXy1TMlU%2FBGhSOQRjVDtRNAQrBi0FK1U0Di4GIQJnB2ILeFU0UTEAelI5XDoHdlMwUGEHNwUpD3BcYgA9UzZWNV82UzhVNwRkUjEEYVQkUSwEMQZmBTJVNQ4wBjkCZgc2C2ZVMFFnADVSOFw7B3ZTOFBhBzQFMg9vXGYAO1MwVi5fLVNJVUUEfVJxBCRUblF1BCkGZwVoVWE%3D&_c=88bf0afd6ef9730869e30eced820d420"
         guard let url = URL(string: urlString) else { return }
         
@@ -42,6 +50,7 @@ class WeatherViewModel{
                 }
                 
                 if let jsonData = response.data {
+                    var weathers: [WeatherProtocol] = []
                     if let jsonDictionary = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
                         let jsonKeysArray = Array(jsonDictionary.keys)
                         var jsonKeys = jsonKeysArray.filter({ $0 != WeatherConstants.message})
@@ -49,7 +58,7 @@ class WeatherViewModel{
                         jsonKeys = jsonKeys.filter({ $0 != WeatherConstants.request_state})
                         jsonKeys = jsonKeys.filter({ $0 != WeatherConstants.request_key})
                         
-                        var weathers: [WeatherProtocol] = []
+                        
                         
                         for jsonKey in 0..<jsonKeys.count - 1 {
                             if let date = jsonDictionary[jsonKeys[jsonKey]] as? [String: Any] {
